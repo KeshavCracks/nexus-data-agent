@@ -1,0 +1,7 @@
+node_modules
+.next
+.env
+__pycache__
+*.pyc
+business_data.csv
+.DS_Store
