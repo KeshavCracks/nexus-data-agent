@@ -7,8 +7,11 @@
 :root {
   --background: #000000;
   --surface: #0F1A24;
+  --surface-light: #1A2A3A;
   --primary: #FFAB00;
   --primary-dark: #E65100;
+  --primary-light: #FFD54F;
+  --accent: #FF6D00;
   --text: #FFFFFF;
   --text-muted: #D4A373;
 }
@@ -17,58 +20,111 @@ body {
   background-color: var(--background);
   color: var(--text);
   font-family: 'Geist', sans-serif;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
 }
 
-.font-rajdhani {
-  font-family: 'Rajdhani', sans-serif;
+.font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Nexus HUD Scanline */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg, 
+    rgba(255, 0, 0, 0.06), 
+    rgba(0, 255, 0, 0.02), 
+    rgba(0, 0, 255, 0.06)
+  );
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 100;
 }
 
-.font-mono {
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* Nexus Scanline Effect */
-.scanline {
+.scanline-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100px;
-  z-index: 10;
+  z-index: 99;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 171, 0, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
-  opacity: 0.1;
-  position: absolute;
-  bottom: 100%;
   animation: scanline 8s linear infinite;
   pointer-events: none;
 }
 
 @keyframes scanline {
-  0% { bottom: 100%; }
-  100% { bottom: -100px; }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
 }
 
-/* Tactical Border */
-.nexus-border {
-  border: 1px solid rgba(255, 171, 0, 0.3);
+/* Tactical Components */
+.nexus-card {
+  background: linear-gradient(135deg, rgba(15, 26, 36, 0.95), rgba(10, 16, 24, 0.98));
+  border: 1px solid rgba(255, 171, 0, 0.2);
   position: relative;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.nexus-border::before {
+.nexus-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 20px rgba(255, 171, 0, 0.15);
+}
+
+.nexus-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.nexus-button {
+  background: rgba(26, 42, 58, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nexus-button:hover {
+  background: rgba(255, 171, 0, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: inset 0 0 10px rgba(255, 171, 0, 0.2);
+}
+
+.nexus-button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 3px;
   height: 100%;
   background: var(--primary);
 }
 
-.nexus-card {
-  background: linear-gradient(135deg, rgba(15, 26, 36, 0.95), rgba(10, 16, 24, 0.98));
+.nexus-input {
+  background: #000000;
   border: 1px solid rgba(255, 171, 0, 0.2);
+  color: var(--primary);
   transition: all 0.3s ease;
 }
 
-.nexus-card:hover {
+.nexus-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(255, 171, 0, 0.2);
+  box-shadow: 0 0 10px rgba(255, 171, 0, 0.3);
+  outline: none;
 }
