@@ -1,26 +1,74 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=JetBrains+Mono:wght@400;700&family=Geist:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #000000;
+  --surface: #0F1A24;
+  --primary: #FFAB00;
+  --primary-dark: #E65100;
+  --text: #FFFFFF;
+  --text-muted: #D4A373;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Geist', sans-serif;
+  overflow-x: hidden;
+}
+
+.font-rajdhani {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Nexus Scanline Effect */
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 10;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 171, 0, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0.1;
+  position: absolute;
+  bottom: 100%;
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanline {
+  0% { bottom: 100%; }
+  100% { bottom: -100px; }
+}
+
+/* Tactical Border */
+.nexus-border {
+  border: 1px solid rgba(255, 171, 0, 0.3);
+  position: relative;
+}
+
+.nexus-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--primary);
+}
+
+.nexus-card {
+  background: linear-gradient(135deg, rgba(15, 26, 36, 0.95), rgba(10, 16, 24, 0.98));
+  border: 1px solid rgba(255, 171, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nexus-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(255, 171, 0, 0.2);
 }
