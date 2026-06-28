@@ -41,9 +41,15 @@ DATA_DICTIONARY = {
 }
 
 # LLM Configuration
-# In production, these will be environment variables
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your-key-here")
-client = openai.OpenAI(api_key=OPENAI_API_KEY)
+# Now supports any OpenAI-compatible provider (OpenAI, Groq, Together, etc.)
+API_KEY = os.getenv("OPENAI_API_KEY", "your-key-here")
+BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o")
+
+client = openai.OpenAI(
+    api_key=API_KEY,
+    base_url=BASE_URL
+)
 
 class QueryRequest(BaseModel):
     query: str
@@ -89,10 +95,10 @@ def run_agent(user_query: str):
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model=MODEL_NAME,
         messages=[{"role": "system", "content": "You are a precise data analyst. Output ONLY JSON."},
                   {"role": "user", "content": prompt}],
-        response_format={ "type": "json_object" }
+        response_format={ "type": "json_object" } if "gpt" in MODEL_NAME else None
     )
     
     res_json = json.loads(response.choices[0].message.content)
@@ -113,7 +119,7 @@ def run_agent(user_query: str):
     """
     
     final_res = client.chat.completions.create(
-        model="gpt-4o",
+        model=MODEL_NAME,
         messages=[{"role": "user", "content": final_prompt}]
     )
     
