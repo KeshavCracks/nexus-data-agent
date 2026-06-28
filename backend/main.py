@@ -20,6 +20,11 @@ app.add_middleware(
 )
 
 # Load the data
+if not os.path.exists('business_data.csv'):
+    print("Dataset not found. Generating fresh business data...")
+    from generate_data import generate_business_data
+    generate_business_data()
+
 df = pd.read_csv('business_data.csv')
 
 # Data Dictionary (The "RAG" part)
