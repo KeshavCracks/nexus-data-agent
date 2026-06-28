@@ -3,8 +3,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, Terminal, Activity, Database, Cpu } from 'lucide-react';
 
 export default function NexusHUD() {
+  interface Message {
+    role: string;
+    content: string;
+  }
+
+  interface AgentResponse {
+    answer: string;
+    thoughts: string[];
+    data: any;
+  }
+
   const [input, setInput] = useState<string>('');
-  const [messages, setMessages] = useState<{role: string, content: string}[]>([
+  const [messages, setMessages] = useState<Message[]>([
     { role: 'system', content: 'NEXUS SYSTEM ONLINE. AWAITING COMMANDS...' }
   ]);
   const [thoughts, setThoughts] = useState<string[]>([]);
@@ -35,7 +46,7 @@ export default function NexusHUD() {
         body: JSON.stringify({ query: userQuery }),
       });
       
-      const data = await response.json();
+      const data: AgentResponse = await response.json();
       
       // Simulate streaming thoughts for a high-end feel
       for (let i = 0; i < data.thoughts.length; i++) {
