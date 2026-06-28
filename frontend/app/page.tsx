@@ -10,7 +10,7 @@ export default function NexusHUD() {
   const [thoughts, setThoughts] = useState([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [dataResult, setDataResult] = useState(null);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
