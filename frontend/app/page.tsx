@@ -3,13 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, Terminal, Activity, Database, Cpu } from 'lucide-react';
 
 export default function NexusHUD() {
-  const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
+  const [input, setInput] = useState<string>('');
+  const [messages, setMessages] = useState<{role: string, content: string}[]>([
     { role: 'system', content: 'NEXUS SYSTEM ONLINE. AWAITING COMMANDS...' }
   ]);
-  const [thoughts, setThoughts] = useState([]);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [dataResult, setDataResult] = useState(null);
+  const [thoughts, setThoughts] = useState<string[]>([]);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [dataResult, setDataResult] = useState<any>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
